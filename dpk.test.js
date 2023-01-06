@@ -1,0 +1,202 @@
+const { deterministicPartitionKey } = require("./dpk");
+
+describe("deterministicPartitionKey", () => {
+  it("Returns the literal '0' when given no input", () => {
+    const trivialKey = deterministicPartitionKey();
+    expect(trivialKey).toBe("0");
+  });
+  it("Returns the literal 'c1802e6b9670927ebfddb7f67b3824642237361f07db35526c42c555ffd2dbe74156c366e1550ef8c0508a6cc796409a7194a59bba4d300a6182b483d315a862' when given {} input", () => {
+    const trivialKey = deterministicPartitionKey({});
+    expect(trivialKey).toBe("c1802e6b9670927ebfddb7f67b3824642237361f07db35526c42c555ffd2dbe74156c366e1550ef8c0508a6cc796409a7194a59bba4d300a6182b483d315a862");
+  });
+  it("Returns the literal 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa' when given 1 input", () => {
+    const trivialKey = deterministicPartitionKey(1);
+    expect(trivialKey).toBe("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa");
+  });
+  it("Returns the literal '0af1abec626b095704a5b03c13e47c3c18bcedb78566b6cadc4d5201cdb27691ce62fe60835587d41c8290616ad4ff1018b14dac6f83ff005922b25925fa4e6a' when given 10 input", () => {
+    const trivialKey = deterministicPartitionKey(10);
+    expect(trivialKey).toBe("0af1abec626b095704a5b03c13e47c3c18bcedb78566b6cadc4d5201cdb27691ce62fe60835587d41c8290616ad4ff1018b14dac6f83ff005922b25925fa4e6a");
+  });
+  it("Returns the literal 'eabb15b82d7e933c61266c8ac8a23fc4719e10257e76e8c38c7fe2cfd83b5d6baa0edc21ef7a4dac37a4dc23c2cded2bf08003026a54164e5e275add29eeaaf5' when given 500 input", () => {
+    const trivialKey = deterministicPartitionKey(500);
+    expect(trivialKey).toBe("eabb15b82d7e933c61266c8ac8a23fc4719e10257e76e8c38c7fe2cfd83b5d6baa0edc21ef7a4dac37a4dc23c2cded2bf08003026a54164e5e275add29eeaaf5");
+  });
+  it("Returns the literal '010b735f1d9042f50a88100476bcb69c2ae0cd20c4df52d6ac43e1dc7a3243a2465b608381d6ca071fc833dce0b4d11ac54c5d4f3322c071810e09409fa41f16' when given 500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 input", () => {
+    const trivialKey = deterministicPartitionKey(500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000);
+    expect(trivialKey).toBe("010b735f1d9042f50a88100476bcb69c2ae0cd20c4df52d6ac43e1dc7a3243a2465b608381d6ca071fc833dce0b4d11ac54c5d4f3322c071810e09409fa41f16");
+  });
+
+  it("Returns the literal '841eb756cabd00a24f3b2cc84a34e88e03215483df0c5bea61dc7b333c4a881969a680b701287008b51f9cdc3fd995e7dc9d8a3086148e3fa82e78332c5708e0' when given 5000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006 input", () => {
+    const trivialKey = deterministicPartitionKey(5000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006);
+    expect(trivialKey).toBe("841eb756cabd00a24f3b2cc84a34e88e03215483df0c5bea61dc7b333c4a881969a680b701287008b51f9cdc3fd995e7dc9d8a3086148e3fa82e78332c5708e0");
+  });
+
+  it("Returns the literal 'd995822ddcecb937ddec30eed03a99cc9559bb55606c9590e5b81abd0633dbbd8eaf50be9630544ebe599af0fbb99ef53771b318e2240b29e03d162d538bd858' when given 50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066 input", () => {
+    const trivialKey = deterministicPartitionKey(50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066);
+    expect(trivialKey).toBe("d995822ddcecb937ddec30eed03a99cc9559bb55606c9590e5b81abd0633dbbd8eaf50be9630544ebe599af0fbb99ef53771b318e2240b29e03d162d538bd858");
+  });
+
+  it("Returns the literal 'f782b910cdf388931df9f00826559deee4b9348dc447cc20b585651b1f5a02203836101a349a150642cb3f9d91ea5c40bf9ab2442caf269db552daa251107562' when given 'string' input", () => {
+    const trivialKey = deterministicPartitionKey("string");
+    expect(trivialKey).toBe("f782b910cdf388931df9f00826559deee4b9348dc447cc20b585651b1f5a02203836101a349a150642cb3f9d91ea5c40bf9ab2442caf269db552daa251107562");
+  });
+
+  it("Returns the literal '83a54b468d98aa00b8613edb35a2f8aaffc09adf91e13680b72a8716c4fc3609ab326a35108dc90884d3c5a4ff2cd58949f9cfcc923218f70f5a21da2535c08b' when given 'string1' input", () => {
+    const trivialKey = deterministicPartitionKey("string1");
+    expect(trivialKey).toBe("83a54b468d98aa00b8613edb35a2f8aaffc09adf91e13680b72a8716c4fc3609ab326a35108dc90884d3c5a4ff2cd58949f9cfcc923218f70f5a21da2535c08b");
+  });
+  it("Returns the literal '983d9562b16c06e6a18e9bd87fb376da9dd4dd9ec4505fd1872cec35982f7487dc18492c073707e439528cb9c235aece2caacefaf40ea1ed16ff165ebcee3fe4' when given 'sample string' input", () => {
+    const trivialKey = deterministicPartitionKey("sample string");
+    expect(trivialKey).toBe("983d9562b16c06e6a18e9bd87fb376da9dd4dd9ec4505fd1872cec35982f7487dc18492c073707e439528cb9c235aece2caacefaf40ea1ed16ff165ebcee3fe4");
+  });
+
+  it("Returns the literal '16ae520c4b48365ae73426cd2c0fff899d5ee0888602ba06c7a654e65730db83830f413645e6b8d578a2bc2d1f293f04e7f86173aa48093057ac2033da93eab6' when given 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef' input", () => {
+    const trivialKey = deterministicPartitionKey("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef");
+    expect(trivialKey).toBe("16ae520c4b48365ae73426cd2c0fff899d5ee0888602ba06c7a654e65730db83830f413645e6b8d578a2bc2d1f293f04e7f86173aa48093057ac2033da93eab6");
+  });
+
+  it("Returns the literal '282ba87e7a8305f51da172ba26adaa2f58e725f9f67d40cf97dbceb9d20abc6becc2fbbbbd427074075dad8ea3732d74c809ec359c7e89d6ffb8ea28187fc46f' when given 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa' input", () => {
+    const trivialKey = deterministicPartitionKey("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa");
+    expect(trivialKey).toBe("282ba87e7a8305f51da172ba26adaa2f58e725f9f67d40cf97dbceb9d20abc6becc2fbbbbd427074075dad8ea3732d74c809ec359c7e89d6ffb8ea28187fc46f");
+  });
+
+  it("Returns the literal '9b4285c815a20438567ed2eb818c7a71e5036ed0cfc3caf69e47cc5afc5495d44025ce20a464de83d8e9776c7775bfeafebbd12465bdca4115dcbccc5a5b3b39' when given 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaa' input", () => {
+    const trivialKey = deterministicPartitionKey("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaa");
+    expect(trivialKey).toBe("9b4285c815a20438567ed2eb818c7a71e5036ed0cfc3caf69e47cc5afc5495d44025ce20a464de83d8e9776c7775bfeafebbd12465bdca4115dcbccc5a5b3b39");
+  });
+
+
+  it("Returns the literal 'ff2c82ed266dc30b1afe862bee32cf996b213513bc6b3e242ff605ddd9d5bbd1e7eebf6dde586b8700125cb7b95d35aec2f4e750d092cd359b202e3d2be41e1a' when given 'true' input", () => {
+    const trivialKey = deterministicPartitionKey(true);
+    expect(trivialKey).toBe("ff2c82ed266dc30b1afe862bee32cf996b213513bc6b3e242ff605ddd9d5bbd1e7eebf6dde586b8700125cb7b95d35aec2f4e750d092cd359b202e3d2be41e1a");
+  });
+
+  it("Returns the literal '0' when given 'false' input", () => {
+    const trivialKey = deterministicPartitionKey(false);
+    expect(trivialKey).toBe("0");
+  });
+
+  it("Returns the literal '0' when given 'undefined' input", () => {
+    const trivialKey = deterministicPartitionKey(undefined);
+    expect(trivialKey).toBe("0");
+  });
+  it("Returns the literal '0' when given 'null' input", () => {
+    const trivialKey = deterministicPartitionKey(null);
+    expect(trivialKey).toBe("0");
+  });
+
+  it("Returns the literal '76b7f85726bf1bc79fd5828547bd9f867d70b4072c142757a46a1767536b092b371f148fc099fca8c02b0c144c97d3604d695377ea3db7b70e250e98ba8b580b' when given '1.1' input", () => {
+    const trivialKey = deterministicPartitionKey(1.1);
+    expect(trivialKey).toBe("76b7f85726bf1bc79fd5828547bd9f867d70b4072c142757a46a1767536b092b371f148fc099fca8c02b0c144c97d3604d695377ea3db7b70e250e98ba8b580b");
+  });
+
+  it("Returns the literal '93162b1488c7ab929a820222b667d40078221561e2afd22d22a700d3ba6ba939836313c207e944458939c29a7adca7496d23e04e9089bd90f1665ce59c580770' when given '13.7' input", () => {
+    const trivialKey = deterministicPartitionKey(13.7);
+    expect(trivialKey).toBe("93162b1488c7ab929a820222b667d40078221561e2afd22d22a700d3ba6ba939836313c207e944458939c29a7adca7496d23e04e9089bd90f1665ce59c580770");
+  });
+
+  it("Returns the literal '08c62a5dbcce5910e1c1a2ec361c0f0a5c3697d126dff9109b7bf6e345ea7f8efaf0b8f77d447b9c2fa76e5ca4c82ed9469c6fb78bf619b961ce2c6c1639477f' when given 'test123' input", () => {
+    const trivialKey = deterministicPartitionKey("test123");
+    expect(trivialKey).toBe("08c62a5dbcce5910e1c1a2ec361c0f0a5c3697d126dff9109b7bf6e345ea7f8efaf0b8f77d447b9c2fa76e5ca4c82ed9469c6fb78bf619b961ce2c6c1639477f");
+  });
+
+  it("Returns the literal '1' when given '{'partitionKey':1}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":1});
+    expect(trivialKey).toBe("1");
+  });
+
+  it("Returns the literal '10' when given '{'partitionKey':10}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":10});
+    expect(trivialKey).toBe("10");
+  });
+
+  it("Returns the literal '500' when given '{'partitionKey':500}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":500});
+    expect(trivialKey).toBe("500");
+  });
+
+  it("Returns the literal '5e+254' when given '{'partitionKey':500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000});
+    expect(trivialKey).toBe("5e+254");
+  });
+
+  it("Returns the literal '5e+255' when given '{'partitionKey':5000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":5000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006});
+    expect(trivialKey).toBe("5e+255");
+  });
+
+  it("Returns the literal '5e+256' when given '{'partitionKey':50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066});
+    expect(trivialKey).toBe("5e+256");
+  });
+
+  it("Returns the literal 'string' when given '{'partitionKey':'string'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"string"});
+    expect(trivialKey).toBe("string");
+  });
+
+  it("Returns the literal 'string1' when given '{'partitionKey':'string1'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"string1"});
+    expect(trivialKey).toBe("string1");
+  });
+
+  it("Returns the literal 'sample string' when given '{'partitionKey':'sample string'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"sample string"});
+    expect(trivialKey).toBe("sample string");
+  });
+
+  it("Returns the literal 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef' when given '{'partitionKey':'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef"});
+    expect(trivialKey).toBe("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03ef");
+  });
+
+  it("Returns the literal 'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa' when given '{'partitionKey':'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa"});
+    expect(trivialKey).toBe("ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa");
+  });
+
+  it("Returns the literal '9f738e7ac8a48855971eb0b710d0806905daabaae7b40a8afb3f2b9101a0b326fbb9348e36bdb3554f42a22c32b904ef51a80a50eb679a341818283fde293d0e' when given '{'partitionKey':'ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaa'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efaa"});
+    expect(trivialKey).toBe("9f738e7ac8a48855971eb0b710d0806905daabaae7b40a8afb3f2b9101a0b326fbb9348e36bdb3554f42a22c32b904ef51a80a50eb679a341818283fde293d0e");
+  });
+
+  it("Returns the literal 'true' when given '{'partitionKey':true}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":true});
+    expect(trivialKey).toBe("true");
+  });
+
+  it("Returns the literal '51a5f43b933ce152103a4789a17f1cf958e0b5e1c793082db6a6c74dd3f04c69ad8f558e28cf7c3eac61af4e484741f095129e815c4de4fdd30e3cd6c4e3c00f' when given '{'partitionKey':false}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":false});
+    expect(trivialKey).toBe("51a5f43b933ce152103a4789a17f1cf958e0b5e1c793082db6a6c74dd3f04c69ad8f558e28cf7c3eac61af4e484741f095129e815c4de4fdd30e3cd6c4e3c00f");
+  });
+
+  it("Returns the literal 'c1802e6b9670927ebfddb7f67b3824642237361f07db35526c42c555ffd2dbe74156c366e1550ef8c0508a6cc796409a7194a59bba4d300a6182b483d315a862' when given '{'partitionKey':undefined}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":undefined});
+    expect(trivialKey).toBe("c1802e6b9670927ebfddb7f67b3824642237361f07db35526c42c555ffd2dbe74156c366e1550ef8c0508a6cc796409a7194a59bba4d300a6182b483d315a862");
+  });
+
+  it("Returns the literal '58540d4d440df8c6c6da0d79cfce715bc92953c6cde8be9f749790004ef2d5a7322d0fd5170eac9a37d57ee0cc975cfca068a60b01622529d9e0fd657f71b8e2' when given '{'partitionKey':null}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":null});
+    expect(trivialKey).toBe("58540d4d440df8c6c6da0d79cfce715bc92953c6cde8be9f749790004ef2d5a7322d0fd5170eac9a37d57ee0cc975cfca068a60b01622529d9e0fd657f71b8e2");
+  });
+
+  it("Returns the literal '{}' when given '{'partitionKey':{}}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":{}});
+    expect(trivialKey).toBe("{}");
+  });
+
+  it("Returns the literal '1.1' when given '{'partitionKey':1.1}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":1.1});
+    expect(trivialKey).toBe("1.1");
+  });
+
+  it("Returns the literal '13.7' when given '{'partitionKey':13.7}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":13.7});
+    expect(trivialKey).toBe("13.7");
+  });
+
+  it("Returns the literal 'test123' when given '{'partitionKey':'test123'}' input", () => {
+    const trivialKey = deterministicPartitionKey({"partitionKey":"test123"});
+    expect(trivialKey).toBe("test123");
+  });
+});
